@@ -25,13 +25,14 @@ public class Network {
         output_deri = new double[NETWORK_LAYER_SIZE][]; // ak(1-ak)
         delta = new double[NETWORK_LAYER_SIZE][]; // (ak-tk) * output_deri || output_deri * ∑delta*weight
 
-        //Will need to randomize bias + weights in the future
+        //Bias + Output values should be modified to the point
+        //where it is possible to find the global minimum (cost function)
         for (int layer=0;layer<NETWORK_LAYER_SIZE;layer++) {
-            bias[layer] = new double[NETWORK_LAYER[layer]];
+            bias[layer] = NetworkTools.createRndArray(NETWORK_LAYER[layer], -1, 1);
             output[layer] = new double[NETWORK_LAYER[layer]];
             output_deri[layer] = new double[NETWORK_LAYER[layer]];
             delta[layer] = new double[NETWORK_LAYER[layer]];
-            if (layer!=0) weight[layer] = new double[NETWORK_LAYER[layer-1]][NETWORK_LAYER[layer]];
+            if (layer!=0) weight[layer] = NetworkTools.createRndArray(NETWORK_LAYER[layer-1], NETWORK_LAYER[layer], -1, 1);
         }
     }
 
@@ -97,7 +98,7 @@ public class Network {
         double[] input = {0.3, 0.6, 0.9};
         double[] target = {0, 1};
         for (int i=0;i<100000;i++) {
-            //eta/learning rate usually go up/down in increments of a factor of 3
+            //eta/learning rate usually goes up/down in increments of a factor of 3
             net.train(input, target, 0.3);
         }
         System.out.println(Arrays.toString(net.calculate(0.3, 0.6, 0.9)));
