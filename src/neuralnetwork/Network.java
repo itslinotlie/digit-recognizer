@@ -70,11 +70,11 @@ public class Network {
         //Hidden Neuron Calculations
         for (int layer=NETWORK_LAYER_SIZE-2;layer>0;layer--) {
             for (int neuron=0;neuron<NETWORK_LAYER[layer];neuron++) {
-                double sum = output_deri[layer][neuron];
-                for (int prevNeuron=0;prevNeuron<NETWORK_LAYER[layer-1];prevNeuron++) {
-                    sum += delta[layer][neuron]*weight[layer][prevNeuron][neuron];
+                double sum = 0;
+                for (int nextNeuron=0;nextNeuron<NETWORK_LAYER[layer+1];nextNeuron++) {
+                    sum += delta[layer+1][nextNeuron]*weight[layer+1][neuron][nextNeuron];
                 }
-                delta[layer][neuron] = sum;
+                delta[layer][neuron] = sum*output_deri[layer][neuron];
             }
         }
     }
@@ -101,6 +101,5 @@ public class Network {
             //eta/learning rate usually goes up/down in increments of a factor of 3
             net.train(input, target, 0.3);
         }
-        System.out.println(Arrays.toString(net.calculate(0.3, 0.6, 0.9)));
     }
 }
