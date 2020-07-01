@@ -7,6 +7,6 @@ Our vast system of intertwined neurons is the inspiration for the widely used ma
 
 ---
 
-After learning the theory of backtracking and itching to code a small-scale project, I decided to set foot into creating a Sudoku solver from sractch, completely underestimating the complexitiy of optical character recognition (OCR), the technology used to recognize text inside images.
+After learning the theory of backtracking and itching to code a small-scale project, I decided to set foot into creating a Sudoku solver from sractch, completely underestimating the complexitiy of optical character recognition (OCR), the technology used to recognize text from images.
 
 This project will be the first half of the Sudoku project and will document my journey through the process of understanding neural networks, deriving the backpropagation algorithm, and training my model through the MNIST digit database.
