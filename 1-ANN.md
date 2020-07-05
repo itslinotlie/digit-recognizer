@@ -4,7 +4,7 @@
 
 Neural networks come in all shapes and sizes but they all share a similar feature: to mimic the human brain. There are plenty of networks, each with their own unique uses and complexity, with the most basic being the feedforward ANN. Information is passed to the input layer and then processed in the hidden layers (if any) and then a value is given in the output layer. This model feeds the information forwards and hence the name, feedforward.
 
-Referencing the graphic above, each circle represents a neuron and the lines between neurons represent the weight. When there are a column of nuerons, it is considered a layer. The three main types of layers are the input, hidden, and output layers. The input layer is responsible for taking in the input of the data and passing it to the hidden layers, where the information gets processed, and this gets passed to the output layer, where the answer is finally given.
+Referencing the graphic above, each circle represents a neuron and the lines between neurons represent a weight. When there are a column of nuerons, it is referred to as a layer. The three main types of layers are the input, hidden, and output layers. The input layer is responsible for taking in the input of the data and passing it to the hidden layers, where the information gets processed, and this gets passed to the output layer, where the answer is finally given.
 
 Given enough time, a large enough sample set, and the proper values, a neural network is able to determine the output of any input similar to the training data it was given to a fairly high degree of certainty (if trained properly). To better explain how this process works, defining some terminology and commonly used notation will help.
 
@@ -20,7 +20,7 @@ Given enough time, a large enough sample set, and the proper values, a neural ne
 | Weight      | A modifiable value that is multipled to the input of a node | 
 | Bias        | A modifiable value that is added to the input of a node |
 | Activation Function | A function that calculates the weighted sum of an output (i.e. the sigmoid function scales -inf and inf to 0+ and 1- respectively)
-| Error Function | A function that calculates the gradient (the steepest direction) of a network's error with respect to the weights/bias'|
+| Error Function | A function that calculates the gradient (the steepest direction) of a network's error with respect to the weights/biases|
 
 
 ## Notation
@@ -48,8 +48,8 @@ With the terminology and notation aside, explaining the feedforward process beco
 
 # Backpropagation
 
-You might be wondering, okay I vaguely understand what a neural network is, but Michael, how does a network learn? Isn't a neural network just numbers? How do you teach numbers to ouput whether an image is a cat or dog?? Great question. Similiar to disciplining someone, we need to know when and how off we are from our predictions. We can do this by comparing our output with the expected output with the error function. With our error function, we have the tools to quantify how off our predictions are. From this value, we are able to adjust our values accordingly so that we can minimize our error—with the goal of an error of 0. The larger of an error our network makes, the more we need to adjust our values. The error function that I will be using is a variant of the commonly used *Mean Squared Error (MSE)*.
+You might be wondering, okay I vaguely understand what a neural network is, but Michael, how does a network learn? Isn't a neural network just numbers? How do you teach numbers to ouput whether an image is a cat or dog?? Great question. Similiar to disciplining someone, we need to know when and how off we are from our predictions. We can do this by comparing our output with the expected output with the error function. With our error function, we have the tools to quantify how far off our prorgram deviated from the target. This tells us how much we need to tweak the weights and biases—the larger the error, the greater the adjustment. The error function that I will be using is a variant of the commonly used *Mean Squared Error (MSE)*.
 
 ![Error Function](https://i.imgur.com/sc5PBr8.png)
 
-In the equation above, E represents the error and it is equal of the sum of all the differences between our output and the expected output all squared. Although it is being squared, the order will matter when we start implementing our knowledge of calculus. Once we our error calculated, we will then propagate this error back and adjust our weights and bias' values accordingly. This is done all the way to the first hidden layer, hence the name backprogatation. If you're ever interested in the proof or equations, head on over to 2-Derivation.
+In the equation above, E represents the error and it is equal of the sum of all the differences between our output and the expected output all squared. Although it is squared, the order will matter when we start implementing our knowledge of calculus. Once our error is calculated, we will then propagate this error back and adjust our weights and biases accordingly, hence the name backprogatation. If you're interested in the proof or equations, head on over to 2-Derivation.
