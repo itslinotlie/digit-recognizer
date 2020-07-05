@@ -2,9 +2,11 @@
 
 ![Structure of a Neural Network](https://i.imgur.com/zYBMAV1.png)
 
-Neural networks come in all shapes and sizes but they all share a similar feature: to mimic the human brain. There are plenty of networks, each with their unique uses and complexity, with the most basic being the feedforward ANN. Information is passed to the input layer and then processed in the hidden layers (if any) and then a value is given in the output layer. This model feeds the information forwards and hence the name, feedforward.
+Neural networks come in all shapes and sizes but they all share a similar feature: to mimic the human brain. There are plenty of networks, each with their own unique uses and complexity, with the most basic being the feedforward ANN. Information is passed to the input layer and then processed in the hidden layers (if any) and then a value is given in the output layer. This model feeds the information forwards and hence the name, feedforward.
 
-Given enough time, a large enough sample set, and the proper outputs, weights, and bias' values, a neural network is able to accurately determine the output of any input similar to the training data (eg. determine the number from any given image). To better explain this process, defining some terminology and commonly used notation will help.
+Referencing the graphic above, each circle represents a neuron and the lines between neurons represent the weight. When there are a column of nuerons, it is considered a layer. The three main types of layers are the input, hidden, and output layers. The input layer is responsible for taking in the input of the data and passing it to the hidden layers, where the information gets processed, and this gets passed to the output layer, where the answer is finally given.
+
+Given enough time, a large enough sample set, and the proper values, a neural network is able to determine the output of any input similar to the training data it was given to a fairly high degree of certainty (if trained properly). To better explain how this process works, defining some terminology and commonly used notation will help.
 
 --- 
 <!--- <br> to create new line --->
@@ -21,17 +23,18 @@ Given enough time, a large enough sample set, and the proper outputs, weights, a
 | Error Function | A function that calculates the gradient (the steepest direction) of a network's error with respect to the weights/bias'|
 
 
-## Notation*
+## Notation
 
-| <h3>Term<h2>    | <h3>Explanation<h3> |
-|:--------------------------------------------------------:|:----------------------:|
+| Term<h2>    | <h3>Explanation<h3> |
+|:--------------------------------:|:----------------------:|
 | W[L][i][j]<br>![Weight](https://i.imgur.com/eBgXthq.png) | The weight from layer L-1 neuron i to layer L neuron j |
 | Θ[L][j]<br>![Bias](https://i.imgur.com/FLdwm57.png)      | The bias of layer L neuron j |
 | x[L][j]<br>![Input](https://i.imgur.com/0xPdXGE.png)     | The input of layer L neuron j |
 | a[L][j]<br>![Output](https://i.imgur.com/CjyuCHE.png)    | The output of layer L neuron j |
 | σ(x)   | The sigmoid activation function <br> ![Sigmoid Function](https://i.imgur.com/GpibRqI.png) |
 | ∂      | The sign used for partial derivatives <br> (the derivative of a multi-variable function) |
-##### *The images will be used during the derivation process while the text will be used in code
+
+\*Author's notes: the images will be used in the derivation while the array-like structure will be used in the actual code. It's good to be comfortable with both formats as they're sometimes used interchangably.
 
 ---
 
@@ -39,14 +42,14 @@ Given enough time, a large enough sample set, and the proper outputs, weights, a
 
 ![Structure of Feedforward](https://i.imgur.com/KjiEv42.png)
 
-With the terminology and notation aside, explaining the feedforward process becomes much cleaner. Updating the values of the neurons start at the first hidden layer and ends at the output layer. In each layer, each neuron's value updates to become the sum of all the previous layer's neurons multipled by their respective weight and finally, this value is added by a bias value. After this, the activation function is applied and the neuron gets the updated value. Rinse and repeat with all other neurons and the entire network has been updated. This however, is only half of the learning process. The magic shines when you implement the backpropagation process.
+With the terminology and notation aside, explaining the feedforward process becomes much cleaner. Updating the values of the neurons start at the first hidden layer and ends at the output layer. In each layer, every neuron's value updates to become the sum of all the previous layer's neuron's output multipled by their respective weight. This is then finally added by a bias value, which you can think of as another neuron with a weight of 1. After this, the activation function is applied and the neuron gets assigned the updated value. Rinse and repeat with all the other neurons and the entire network has been updated. This however, is only half of the learning process. The magic shines when you implement the backpropagation process.
 
 ---
 
 # Backpropagation
 
-You might be wondering, okay I vaguely understand what a neural network is, but how does a network learn? Isn't a neural network just numbers? How do you teach numbers to ouput x, y, or z? Great question. Similiar to disciplining someone, we need to know when and how off we are from our predictions. We can do this by comparing our output with the expected output with our error function. We adjust our values accordingly, which means that the larger of an error our network makes, the more we need to adjust our values. The error function that I will be using is a variant of the commonly used *Mean Squared Error (MSE)* function.
+You might be wondering, okay I vaguely understand what a neural network is, but Michael, how does a network learn? Isn't a neural network just numbers? How do you teach numbers to ouput whether an image is a cat or dog?? Great question. Similiar to disciplining someone, we need to know when and how off we are from our predictions. We can do this by comparing our output with the expected output with the error function. With our error function, we have the tools to quantify how off our predictions are. From this value, we are able to adjust our values accordingly so that we can minimize our error—with the goal of an error of 0. The larger of an error our network makes, the more we need to adjust our values. The error function that I will be using is a variant of the commonly used *Mean Squared Error (MSE)*.
 
 ![Error Function](https://i.imgur.com/sc5PBr8.png)
 
-In the equation, E represents the error and it is equal of the sum of all the differences between the actual output and the expected output all squared. Once we have calculated our error, we will then propagate this error back and adjust our weights and bias' accordingly. This is done all the way to the first hidden layer, hence the name backprogatation. If you're ever interested in the proof, head on over to 2-Derivation.
+In the equation above, E represents the error and it is equal of the sum of all the differences between our output and the expected output all squared. Although it is being squared, the order will matter when we start implementing our knowledge of calculus. Once we our error calculated, we will then propagate this error back and adjust our weights and bias' values accordingly. This is done all the way to the first hidden layer, hence the name backprogatation. If you're ever interested in the proof or equations, head on over to 2-Derivation.
