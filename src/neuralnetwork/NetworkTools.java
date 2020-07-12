@@ -1,5 +1,7 @@
 package neuralnetwork;
 
+import java.util.*;
+
 public class NetworkTools {
     public static double[] createRndArray(int size, double lower_bound, double upper_bound) {
         double arr[] = new double[size];
@@ -12,6 +14,15 @@ public class NetworkTools {
         double arr[][] = new double[sizeY][sizeX];
         for (int i=0;i<sizeY;i++)
             arr[i] = createRndArray(sizeX, lower_bound, upper_bound);
+        return arr;
+    }
+
+    public static int[] createRndArray(int size, int upper_bound) {
+        List<Integer> values = new ArrayList();
+        int arr[] = new int[size];
+        for (int i=0;i<upper_bound;i++) values.add(i);
+        Collections.shuffle(values);
+        for (int i=0;i<size;i++) arr[i] = values.get(i);
         return arr;
     }
 }
