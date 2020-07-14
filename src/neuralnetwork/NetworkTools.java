@@ -25,4 +25,15 @@ public class NetworkTools {
         for (int i=0;i<size;i++) arr[i] = values.get(i);
         return arr;
     }
+
+    public static int getBestId(double[] arr) {
+        double max = arr[0]; int id = 0;
+        for (int i=1;i<arr.length;i++) {
+            if(arr[i]>max) {
+                max = arr[i];
+                id = i;
+            }
+        }
+        return id;
+    }
 }

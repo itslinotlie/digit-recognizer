@@ -41,6 +41,8 @@ public class Network {
     public void train(TrainSet set, int loops, int batch_size, double eta) {
         if (set.getINPUT_SIZE()!=INPUT_SIZE || set.getOUTPUT_SIZE()!=OUTPUT_SIZE) return;
         for (int i=1;i<=loops;i++) {
+            if (i%(loops/100)==0)
+                System.out.println("You're at: "+((double)i/(double)loops * 100)+"%");
             TrainSet x = set.extractBatch(batch_size);
             for (int batch=0;batch<batch_size;batch++) {
                 train(x.getInput(batch), x.getOutput(batch), eta);
