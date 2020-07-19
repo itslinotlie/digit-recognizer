@@ -16,12 +16,10 @@ public class TrainSet {
     }
 
     public TrainSet extractBatch(int amt) {
-        if(0>=amt || amt>=data.size()) return this;
+        if(0>=amt || amt>data.size()) return this;
         TrainSet x = new TrainSet(INPUT_SIZE, OUTPUT_SIZE);
-        int rnd[] = NetworkTools.createRndArray(amt, data.size());
-        for (int i=0;i<amt;i++) {
-            x.addData(data.get(rnd[i])[0], data.get(rnd[i])[1]);
-        }
+        int rnd[] = NetworkTools.createRndIDArray(amt, data.size());
+        for (int i:rnd) x.addData(getInput(rnd[i]), getOutput(rnd[i]));
         return x;
     }
 
@@ -52,10 +50,6 @@ public class TrainSet {
     public double[] getInput(int id) {return data.get(id)[0];}
 
     public double[] getOutput(int id) {return data.get(id)[1];}
-
-    public int getINPUT_SIZE() {return INPUT_SIZE;}
-
-    public int getOUTPUT_SIZE() {return OUTPUT_SIZE;}
 
     public int size() {return data.size();}
 }
