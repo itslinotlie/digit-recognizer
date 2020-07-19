@@ -7,14 +7,11 @@ import java.io.*;
 
 public class Mnist {
     static final int INPUT_SIZE = 784, OUTPUT_SIZE = 10;
-    static TrainSet createTrainSet(int start, int end) throws IOException {
+    static TrainSet createTrainSet(int start, int end, String lbl, String img) throws IOException {
         TrainSet set = new TrainSet(INPUT_SIZE, OUTPUT_SIZE);
         String path = new File("").getAbsolutePath();
-        MnistLabel label = new MnistLabel(path+"/res/train-labels.idx1-ubyte", "r");
-        MnistImage image = new MnistImage(path+"/res/train-images.idx3-ubyte", "r");
-
-        if (start<0 || end>label.count)
-            throw new RuntimeException("Range is out of bounds");
+        MnistLabel label = new MnistLabel(path+lbl, "r");
+        MnistImage image = new MnistImage(path+img, "r");
 
         //Skipping the data from [0, start)
         for (int i=0;i<start;i++) {
@@ -23,15 +20,14 @@ public class Mnist {
 
         //Adding MNIST data into trainset
         for (int i=start;i<=end;i++) {
-            double in[] = new double[784], out[] = new double[10];
+            double in[] = new double[INPUT_SIZE], out[] = new double[OUTPUT_SIZE];
+            in = image.readImage();
             out[label.readLabel()]++;
-            //Divide by 255 to scale the values to [0, 1] (should keep everything balanced)
-            for (int j=0;j<INPUT_SIZE;j++)
-                in[j] = image.readImage()/255d;
             set.addData(in, out);
         }
         return set;
     }
+
     static String accuracy(Network net, TrainSet set) {
         double top = 0, bot = 0;
         for (int i=0;i<set.size();i++) {
@@ -43,12 +39,21 @@ public class Mnist {
         return "Top: "+top+" Bot: "+bot+" Total: "+top/bot;
     }
 
+    static void trainData(Network net, TrainSet set, TrainSet test, int epochs, int loops, int batch_size, double eta) {
+        for (int i=1;i<=epochs;i++) {
+            net.train(set, loops, batch_size, eta);
+            System.out.println("<<<<<"+i+">>>>>");
+            System.out.println("Set: "+accuracy(net, set));
+            System.out.println("Test: "+accuracy(net, test));
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        Network net = new Network(INPUT_SIZE, 50, 30, 20, OUTPUT_SIZE);
-        TrainSet set = createTrainSet(1, 100);
-        TrainSet test = createTrainSet(101, 200);
-        net.train(set, 100000, 100, 0.3);
-        System.out.println("Same: "+accuracy(net, set));
-        System.out.println("New: "+accuracy(net, test));
+        Network net = new Network(INPUT_SIZE, 75, 30, OUTPUT_SIZE);
+        TrainSet set = createTrainSet(0, 59999, "/res/train-labels.idx1-ubyte", "/res/train-images.idx3-ubyte");
+        System.out.println("Set is done loading");
+        TrainSet test = createTrainSet(0, 9999, "/res/t10k-labels.idx1-ubyte", "/res/t10k-images.idx3-ubyte");
+        System.out.println("Test is done loading");
+        trainData(net, set, test, 1000, 5, 60000, 0.3);
     }
 }
