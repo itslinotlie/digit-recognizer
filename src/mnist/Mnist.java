@@ -39,17 +39,19 @@ public class Mnist {
         return "Top: "+top+" Bot: "+bot+" Total: "+top/bot;
     }
 
-    static void trainData(Network net, TrainSet set, TrainSet test, int epochs, int loops, int batch_size, double eta) {
+    static void trainData(Network net, TrainSet set, TrainSet test, int epochs, int loops, int batch_size, double eta) throws IOException {
         for (int i=1;i<=epochs;i++) {
             net.train(set, loops, batch_size, eta);
             System.out.println("<<<<<"+i+">>>>>");
             System.out.println("Set: "+accuracy(net, set));
             System.out.println("Test: "+accuracy(net, test));
+            net.saveNetwork(net);
         }
     }
 
     public static void main(String[] args) throws IOException {
         Network net = new Network(INPUT_SIZE, 75, 30, OUTPUT_SIZE);
+        if (net.matchesFile(net)) net = net.loadNetwork();
         TrainSet set = createTrainSet(0, 59999, "/res/train-labels.idx1-ubyte", "/res/train-images.idx3-ubyte");
         System.out.println("Set is done loading");
         TrainSet test = createTrainSet(0, 9999, "/res/t10k-labels.idx1-ubyte", "/res/t10k-images.idx3-ubyte");

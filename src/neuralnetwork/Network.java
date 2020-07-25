@@ -3,6 +3,7 @@ package neuralnetwork;
 import trainset.TrainSet;
 
 import java.util.*;
+import java.io.*;
 
 public class Network {
     public final int[] NETWORK_LAYER;
@@ -39,10 +40,8 @@ public class Network {
     }
 
     public void train(TrainSet set, int loops, int batch_size, double eta) {
-        if (set.getINPUT_SIZE()!=INPUT_SIZE || set.getOUTPUT_SIZE()!=OUTPUT_SIZE) return;
+        if (set.INPUT_SIZE!=INPUT_SIZE || set.OUTPUT_SIZE!=OUTPUT_SIZE) return;
         for (int i=1;i<=loops;i++) {
-            if (i%(loops/100)==0)
-                System.out.println("You're at: "+((double)i/(double)loops * 100)+"%");
             TrainSet x = set.extractBatch(batch_size);
             for (int batch=0;batch<batch_size;batch++) {
                 train(x.getInput(batch), x.getOutput(batch), eta);
@@ -106,8 +105,8 @@ public class Network {
 
     public double sigmoid(double x) {return 1d/(1+Math.exp(-x));}
 
-    //updated testing
-    public static void main(String[] args) {
+    //testing
+    public static void main(String[] args) throws IOException {
         Network net = new Network(4, 3, 2, 2);
         TrainSet set = new TrainSet(4, 2);
 
@@ -121,16 +120,69 @@ public class Network {
             System.out.println(Arrays.toString(net.calculate(set.getInput(i))));
         }
 
+        net.saveNetwork(net);
+        Network test = new Network(4, 3, 2, 2);
+        if(matchesFile(test)) test = test.loadNetwork();
+        for (int i=0;i<set.size();i++) {
+            System.out.println(Arrays.toString(test.calculate(set.getInput(i))));
+        }
     }
 
-    //testing
-//    public static void main(String[] args) {
-//        Network net = new Network(3, 3, 2);
-//        double[] input = {0.3, 0.6, 0.9};
-//        double[] target = {0, 1};
-//        for (int i=0;i<100000;i++) {
-//            //eta/learning rate usually goes up/down in increments of a factor of 3
-//            net.train(input, target, 0.3);
-//        }
-//    }
+    static String path = new File("").getAbsolutePath()+"/res/network.txt";
+    static BufferedReader br;
+    static PrintWriter pw;
+    static StringTokenizer st;
+    public static boolean matchesFile(Network net) throws IOException {
+        if (!new java.io.File(path).exists()) return false;
+        br = new BufferedReader(new FileReader(path));
+        int arr[] = new int[readInt()];
+        for (int i=0;i<arr.length;i++) {
+            if (readInt()!=net.NETWORK_LAYER[i]) return false;
+        } return true;
+    }
+
+    public static Network loadNetwork() throws IOException {
+        br = new BufferedReader(new FileReader(path));
+        int arr[] = new int[readInt()];
+        for (int i=0;i<arr.length;i++) arr[i] = readInt();
+        Network net = new Network(arr);
+        for (int layer=1;layer<net.NETWORK_LAYER_SIZE;layer++) {
+            for (int neuron=0;neuron<net.NETWORK_LAYER[layer];neuron++) {
+                for (int prevNeuron=0;prevNeuron<net.NETWORK_LAYER[layer-1];prevNeuron++) {
+                    net.weight[layer][prevNeuron][neuron] = readDouble();
+                }
+            }
+            for (int neuron=0;neuron<net.NETWORK_LAYER[layer];neuron++) {
+                net.bias[layer][neuron] = readDouble();
+            }
+        }
+        return net;
+    }
+
+    public static void saveNetwork(Network net) throws IOException {
+        pw = new PrintWriter(new BufferedWriter(new FileWriter(path)));
+        pw.println(net.NETWORK_LAYER_SIZE);
+        for (int i=0;i<net.NETWORK_LAYER_SIZE;i++) {
+            pw.print(i==net.NETWORK_LAYER_SIZE-1? net.NETWORK_LAYER[i]+"\n":net.NETWORK_LAYER[i]+" ");
+        }
+        for (int layer=1;layer<net.NETWORK_LAYER_SIZE;layer++) {
+            for (int neuron=0;neuron<net.NETWORK_LAYER[layer];neuron++) {
+                for (int prevNeuron=0;prevNeuron<net.NETWORK_LAYER[layer-1];prevNeuron++) {
+                    pw.print(prevNeuron==net.NETWORK_LAYER[layer-1]-1? net.weight[layer][prevNeuron][neuron]+"\n":net.weight[layer][prevNeuron][neuron]+" ");
+                }
+            }
+            for (int neuron=0;neuron<net.NETWORK_LAYER[layer];neuron++) {
+                pw.print(neuron==net.NETWORK_LAYER[layer]-1? net.bias[layer][neuron]+"\n":net.bias[layer][neuron]+" ");
+            }
+        }
+        pw.close();
+    }
+
+    static String next() throws IOException {
+        while(st==null || !st.hasMoreTokens())
+            st = new StringTokenizer(br.readLine().trim());
+        return st.nextToken();
+    }
+    static int readInt() throws IOException {return Integer.parseInt(next());}
+    static double readDouble() throws IOException {return Double.parseDouble(next());}
 }

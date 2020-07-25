@@ -19,7 +19,7 @@ public class TrainSet {
         if(0>=amt || amt>data.size()) return this;
         TrainSet x = new TrainSet(INPUT_SIZE, OUTPUT_SIZE);
         int rnd[] = NetworkTools.createRndIDArray(amt, data.size());
-        for (int i:rnd) x.addData(getInput(rnd[i]), getOutput(rnd[i]));
+        for (int i:rnd) x.addData(getInput(i), getOutput(i));
         return x;
     }
 
