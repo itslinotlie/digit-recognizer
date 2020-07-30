@@ -120,9 +120,9 @@ public class Network {
             System.out.println(Arrays.toString(net.calculate(set.getInput(i))));
         }
 
-        net.saveNetwork(net);
+        net.saveNetwork(net, path);
         Network test = new Network(4, 3, 2, 2);
-        if(matchesFile(test)) test = test.loadNetwork();
+        if(matchesFile(test, path)) test = test.loadNetwork(path);
         for (int i=0;i<set.size();i++) {
             System.out.println(Arrays.toString(test.calculate(set.getInput(i))));
         }
@@ -132,7 +132,7 @@ public class Network {
     static BufferedReader br;
     static PrintWriter pw;
     static StringTokenizer st;
-    public static boolean matchesFile(Network net) throws IOException {
+    public static boolean matchesFile(Network net, String path) throws IOException {
         if (!new java.io.File(path).exists()) return false;
         br = new BufferedReader(new FileReader(path));
         int arr[] = new int[readInt()];
@@ -141,7 +141,7 @@ public class Network {
         } return true;
     }
 
-    public static Network loadNetwork() throws IOException {
+    public static Network loadNetwork(String path) throws IOException {
         br = new BufferedReader(new FileReader(path));
         int arr[] = new int[readInt()];
         for (int i=0;i<arr.length;i++) arr[i] = readInt();
@@ -159,7 +159,7 @@ public class Network {
         return net;
     }
 
-    public static void saveNetwork(Network net) throws IOException {
+    public static void saveNetwork(Network net, String path) throws IOException {
         pw = new PrintWriter(new BufferedWriter(new FileWriter(path)));
         pw.println(net.NETWORK_LAYER_SIZE);
         for (int i=0;i<net.NETWORK_LAYER_SIZE;i++) {
