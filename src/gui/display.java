@@ -15,19 +15,15 @@ public class display extends JFrame {
     public static JLabel grid[][] = new JLabel[28][28], img[] = new JLabel[16], mask[] = new JLabel[8], digit[] = new JLabel[10];
     public ImageIcon icon[] = new ImageIcon[16], digitIcon[] = new ImageIcon[10];
     public Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-    public logic brain;
+    public logic brain = new logic();
 
     public display() throws IOException {
         super("I'll take your #");
-        setupBrain();
         setupFrame();
         setupPanel();
         setupLabel();
         setupDigit();
         repaint();
-    }
-    public void setupBrain() throws IOException {
-        brain = new logic();
     }
     public void setupFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,6 +83,7 @@ public class display extends JFrame {
             int x2 = GRID_SIZE*(-20+7*i), y2 = HEIGHT-(int)(1.45*icon[i].getIconHeight());
             int w = icon[i].getIconWidth(), h = icon[i].getIconHeight();
             mask[i].setBounds(i>2? x2:x, i>2? y2:y, w, h);
+            mask[i].setBorder(border);
             brain.createLabelAction(mask[i]);
         }
     }
@@ -128,6 +125,7 @@ public class display extends JFrame {
             case 9: return path+"right-arrow.png";
             case 10: return path+"bulb.png";
             case 11: return path+"check-highlight.png";
+            //case 12 never gets applied, but it allows for easy transitions
             case 12: return path+brain.getDigit()+"-highlight.png";
             case 13: return path+"left-arrow-highlight.png";
             case 14: return path+"right-arrow-highlight.png";
