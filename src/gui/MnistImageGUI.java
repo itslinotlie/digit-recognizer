@@ -10,9 +10,7 @@ public class MnistImageGUI  {
     public String tag;
     MnistImage img;
     public MnistImageGUI(String x) throws IOException {
-        if(x.equals(train)) tag = train;
-        else if (x.equals(test)) tag = test;
-        else {System.out.print("ERROR"); return;}
+        tag = (x.equals(train)? train:test);
         img = new MnistImage(path+tag, "r");
     }
     public double[] readImage() throws IOException {

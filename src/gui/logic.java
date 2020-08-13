@@ -29,6 +29,7 @@ public class logic {
         brain = new MnistImageGUI(train);
         info = new logicDisplay(2);
     }
+    //This function allows for the customization of brush sizes (inspiration from ccc01s2)
     public void draw(JLabel lbl) {
         int m[][] = {{0,-1},{-1,0},{0,1},{1,0}};
         int r = lbl.getY()/20, c = lbl.getX()/20, d = 0;

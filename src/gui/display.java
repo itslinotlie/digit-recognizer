@@ -15,6 +15,7 @@ public class display extends JFrame {
     public static JLabel grid[][] = new JLabel[28][28], img[] = new JLabel[16], mask[] = new JLabel[8], digit[] = new JLabel[10];
     public ImageIcon icon[] = new ImageIcon[16], digitIcon[] = new ImageIcon[10];
     public Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+    public Border borderr = BorderFactory.createLineBorder(Color.BLACK, 3);
     public logic brain = new logic();
 
     public display() throws IOException {
@@ -73,6 +74,8 @@ public class display extends JFrame {
             if(i==14) {x2+=3;y2-=3;}
             img[i].setBounds(i>10? x2:x, i>10? y2:y, w, h);
             if(i==7 || i==12 || (i>10 && i!=14)) img[i].setVisible(false);
+            //Removing Light Bulb Feature
+            if(i==10 || i==15) img[i].setVisible(false);
         }
         //mask (invisible layer above graphics)
         for (int i=0;i<8;i++) {
@@ -83,8 +86,10 @@ public class display extends JFrame {
             int x2 = GRID_SIZE*(-20+7*i), y2 = HEIGHT-(int)(1.45*icon[i].getIconHeight());
             int w = icon[i].getIconWidth(), h = icon[i].getIconHeight();
             mask[i].setBounds(i>2? x2:x, i>2? y2:y, w, h);
-            mask[i].setBorder(border);
+//            mask[i].setBorder(border);
             brain.createLabelAction(mask[i]);
+            //Removing Light Bulb Feature
+            if(i==7 || i==4) mask[i].setVisible(false);
         }
     }
     public void setupDigit() {
@@ -102,7 +107,6 @@ public class display extends JFrame {
         }
     }
     public void createLabelInfo(JLabel lbl, int x) {
-        System.out.println(x);
         icon[x] = new ImageIcon(getPath(x));
         int w1 = icon[x].getIconWidth()*3/8, h1 = icon[x].getIconHeight()*3/8;
         int w2 = icon[x].getIconWidth()*9/10, h2 = icon[x].getIconHeight()*9/10;
@@ -131,9 +135,5 @@ public class display extends JFrame {
             case 14: return path+"right-arrow-highlight.png";
             case 15: return path+"bulb-highlight.png";
         } return null;
-    }
-    //Comment this out later (to follow code conventions)
-    public static void main(String[] args) throws IOException {
-        new display();
     }
 }

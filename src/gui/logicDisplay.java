@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Hashtable;
 
+//Depreciated class (related to the Light Bulb)
 public class logicDisplay extends JFrame {
     public int WIDTH = 300, HEIGHT = 300, BRUSH_SIZE, a[] = {0, 0, 3, 8};
     public JSlider js;
