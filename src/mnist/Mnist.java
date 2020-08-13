@@ -13,9 +13,10 @@ public class Mnist {
         TrainSet set = new TrainSet(INPUT_SIZE, OUTPUT_SIZE);
         String path = new File("").getAbsolutePath();
         MnistLabel label = new MnistLabel(path+lbl, "r");
-        //Normal digits
+        //Change MnistImage reader dependant on which file you wish to train
+        //MnistImage for normal digits (grayscale)
         MnistImage image = new MnistImage(path+img, "r");
-        //Modified digits to be b/w only
+        //MnistImageGUI for modified digits (b/w only)
 //        MnistImageGUI image = new MnistImageGUI(img);
 
         //Skipping the data from [0, start)
@@ -57,9 +58,12 @@ public class Mnist {
         Network net = new Network(784, 75, 30, 10);
         //Change the path to switch between training either models (remember to change createTrainSet settings as well)
         String path = new File("").getAbsolutePath()+"/res/gui-network.txt";
+        //Comment out line 62 if you wish to train the model from scratch (rather than loadingn a pre-trained model)
         if (net.matchesFile(net, path)) net = net.loadNetwork(path);
+        //Maximum amount of training data --> [0, 59999]
         TrainSet set = createTrainSet(0, 59999, "/res/train-labels.idx1-ubyte", "/res/train-images.idx3-ubyte");
         System.out.println("Set is done loading");
+        //Maximum amount of testing data -> [0, 9999]
         TrainSet test = createTrainSet(0, 9999, "/res/t10k-labels.idx1-ubyte", "/res/t10k-images.idx3-ubyte");
         System.out.println("Test is done loading");
         trainData(net, set, test, 1000, 5, 60000, 0.3, path);

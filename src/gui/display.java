@@ -74,10 +74,10 @@ public class display extends JFrame {
             if(i==14) {x2+=3;y2-=3;}
             img[i].setBounds(i>10? x2:x, i>10? y2:y, w, h);
             if(i==7 || i==12 || (i>10 && i!=14)) img[i].setVisible(false);
-            //Removing Light Bulb Feature
+            //Hiding/removing Light Bulb Feature
             if(i==10 || i==15) img[i].setVisible(false);
         }
-        //mask (invisible layer above graphics)
+        //mask (invisible layer above graphics, --> budget buttons but with labels instead)
         for (int i=0;i<8;i++) {
             mask[i] = new JLabel();
             createLabelInfo(mask[i], i);
@@ -88,7 +88,7 @@ public class display extends JFrame {
             mask[i].setBounds(i>2? x2:x, i>2? y2:y, w, h);
 //            mask[i].setBorder(border);
             brain.createLabelAction(mask[i]);
-            //Removing Light Bulb Feature
+            //Hiding/removing Light Bulb Feature
             if(i==7 || i==4) mask[i].setVisible(false);
         }
     }

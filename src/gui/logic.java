@@ -180,6 +180,7 @@ public class logic {
         }
         return arr;
     }
+    //Creates the animations, but the timing bugs out went when repeatedly spammed
     public void startTimer(int x, JLabel lbl) {
         timer = new Timer(x, e -> {
             lbl.setVisible(false);

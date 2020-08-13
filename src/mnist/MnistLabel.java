@@ -7,7 +7,7 @@ public class MnistLabel extends MnistFile {
         super(name, mode);
     }
 
-    public int readLabel() throws IOException {return readByte();}
+    public int readLabel() throws IOException {return read();}
 
     protected int magicNumber() {return 2049;}
 }

@@ -4,7 +4,7 @@ import neuralnetwork.NetworkTools;
 
 import java.util.*;
 
-//tldr; this class allows you to easily scale your training data
+//This class allows you to easily scale your training data
 //to properly train your network (in preparations for MNIST)
 public class TrainSet {
     public final int INPUT_SIZE, OUTPUT_SIZE;
@@ -15,6 +15,7 @@ public class TrainSet {
         this.OUTPUT_SIZE = OUTPUT_SIZE;
     }
 
+    //Provides the option for "Mini-batch gradiennt descent"
     public TrainSet extractBatch(int amt) {
         if(0>=amt || amt>data.size()) return this;
         TrainSet x = new TrainSet(INPUT_SIZE, OUTPUT_SIZE);
@@ -23,6 +24,7 @@ public class TrainSet {
         return x;
     }
 
+    //For testing purposes
     public String toString() {
         String x = "Size: "+data.size()+" | In: "+INPUT_SIZE+"  Out: "+OUTPUT_SIZE+"\n";
         for (int i=0;i<data.size();i++)
@@ -30,14 +32,14 @@ public class TrainSet {
         return x;
     }
 
-    //testing
+    //Testing functions
     public static void main(String[] args) {
         TrainSet set = new TrainSet(3, 2);
         for (int i=1;i<=8;i++) {
             double[] in = new double[3], out = new double[2];
             for (int j=0;j<3;j++) {
-                if (j<2) out[j] = ((int)(Math.random()*10)) / 10d;
-                in[j] = ((int)(Math.random()*10)) / 10d;
+                if (j<2) out[j] = (int)(Math.random()*10) / 10d;
+                in[j] = (int)(Math.random()*10) / 10d;
             }
             set.addData(in, out);
         }

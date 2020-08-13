@@ -56,6 +56,7 @@ public class Network {
         update(eta);
     }
 
+    //Feed-forward method
     public double[] calculate(double... input) {
         if (input.length != INPUT_SIZE) return null;
         output[0] = input;
@@ -73,6 +74,7 @@ public class Network {
         return output[NETWORK_LAYER_SIZE-1];
     }
 
+    //Back-propagation method
     public void backPropagate(double[] target) {
         if (target.length != OUTPUT_SIZE) return;
         //Output Neuron Calculations
@@ -92,6 +94,7 @@ public class Network {
         }
     }
 
+    //Updating weights & biases
     public void update(double eta) {
         for (int layer=1;layer<NETWORK_LAYER_SIZE;layer++)  {
             for (int neuron=0;neuron<NETWORK_LAYER[layer];neuron++) {
@@ -103,9 +106,10 @@ public class Network {
         }
     }
 
+    //Activation function
     public double sigmoid(double x) {return 1d/(1+Math.exp(-x));}
 
-    //testing
+    //Testing functions
     public static void main(String[] args) throws IOException {
         Network net = new Network(4, 3, 2, 2);
         TrainSet set = new TrainSet(4, 2);
@@ -128,12 +132,18 @@ public class Network {
         }
     }
 
+    // ------------------------------------------------------------------------------------------------------------
+
+    //Saving | Loading network information
     static String path = new File("").getAbsolutePath()+"/res/network.txt";
     static BufferedReader br;
     static PrintWriter pw;
     static StringTokenizer st;
+
     public static boolean matchesFile(Network net, String path) throws IOException {
+        //Check if file exists
         if (!new java.io.File(path).exists()) return false;
+        //Check if network dimensions are the same
         br = new BufferedReader(new FileReader(path));
         int arr[] = new int[readInt()];
         for (int i=0;i<arr.length;i++) {

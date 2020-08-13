@@ -5,6 +5,7 @@ import mnist.MnistImage;
 import java.io.File;
 import java.io.IOException;
 
+//Modified version of the MnistImage reader for better accuracy with the GUI (b/w instead of grayscale)
 public class MnistImageGUI  {
     public String path = new File("").getAbsolutePath(), train = "/res/train-images.idx3-ubyte", test = "/res/t10k-images.idx3-ubyte";
     public String tag;

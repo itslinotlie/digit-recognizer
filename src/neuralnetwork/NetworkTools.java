@@ -3,6 +3,7 @@ package neuralnetwork;
 import java.util.*;
 
 public class NetworkTools {
+    //Generating values for weights and bias arrays
     public static double[] createRndArray(int size, double lower_bound, double upper_bound) {
         double arr[] = new double[size];
         for (int i=0;i<size;i++)
@@ -17,6 +18,7 @@ public class NetworkTools {
         return arr;
     }
 
+    //Generating random IDs for TrainSet
     public static int[] createRndIDArray(int size, int upper_bound) {
         List<Integer> values = new ArrayList();
         int arr[] = new int[size];
@@ -26,6 +28,7 @@ public class NetworkTools {
         return arr;
     }
 
+    //Used for finding the best answer from the output layer
     public static int getBestId(double[] arr) {
         double max = arr[0]; int id = 0;
         for (int i=1;i<arr.length;i++) {
