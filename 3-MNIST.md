@@ -1,8 +1,8 @@
 # MNIST Dataset
 
-<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/MnistExamples.png" alt="MNIST Dataset"></p>
+<p align="center"><img src="https://imgur.com/90pp7sa.jpg" alt="MNIST Dataset" width=75%></p>
 
-##### Image from Wikipedia
+###### Digits from the MNIST dataset
 
 With almost all the necessary components required to start training the model, there is one last step to consider: the data. The most common issue with machine learning is finding a large enough dataset while ensuring that it is appropriately properly cleaned and formatted. Enter the MNIST Dataset. Containing a total of 70 000 handwritten digits from adults and students, this dataset is perfect for training any model. With just enough variance in the digits, the dataset provides an accurate scope of every digit.
 
